@@ -37,7 +37,7 @@ def notice(mode):
     if mode == "unlock":
         return (
             "<blockquote>⏰ <b>Buy-Sell Time: "
-            "10:00 AM – 06:00 PM</b></blockquote>\n\n"
+            "10:00 AM – 6:00 PM</b></blockquote>\n\n"
             "🟢 <b>গ্রুপ OPEN হয়েছে! 🏦</b>\n\n"
             "আজ সকাল ১০টা থেকে ডলার Buy-Sell কার্যক্রম "
             "শুরু হয়েছে। এখন আপনারা ডলার কেনা-বেচা "
