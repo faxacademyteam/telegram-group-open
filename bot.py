@@ -1,4 +1,3 @@
-```python
 import os
 import json
 import time
@@ -21,7 +20,6 @@ def call(method, payload):
     try:
         with urllib.request.urlopen(req, timeout=25) as response:
             result = json.loads(response.read().decode("utf-8"))
-
     except urllib.error.HTTPError as exc:
         raise RuntimeError(
             exc.read().decode(errors="replace")
@@ -71,7 +69,6 @@ def send_pin_wait_unpin(text):
 
     message_id = message["message_id"]
 
-    # Pin the notice and notify group members.
     call("pinChatMessage", {
         "chat_id": CHAT_ID,
         "message_id": message_id,
@@ -83,10 +80,8 @@ def send_pin_wait_unpin(text):
         "with notification enabled."
     )
 
-    # Keep the notice pinned for approximately 1 minute.
     time.sleep(60)
 
-    # Unpin this exact message.
     call("unpinChatMessage", {
         "chat_id": CHAT_ID,
         "message_id": message_id,
@@ -122,7 +117,6 @@ def main():
         )
     }
 
-    # Update group permissions before sending the notice.
     call("setChatPermissions", {
         "chat_id": CHAT_ID,
         "permissions": permissions,
@@ -136,4 +130,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
