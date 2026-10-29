@@ -49,7 +49,7 @@ def notice(mode):
 
     return (
         "<blockquote>⏰ <b>Buy-Sell Time: "
-        "10:00 AM – 06:00 PM</b></blockquote>\n\n"
+        "10 AM – 6 PM</b></blockquote>\n\n"
         "🔴 <b>আজকের মতো গ্রুপ বন্ধ!</b>\n"
         "আজ সন্ধ্যা ৬টায় গ্রুপ অটো OFF হয়েছে।\n"
         "━━━━━━━━━━━━━━━━━━\n"
