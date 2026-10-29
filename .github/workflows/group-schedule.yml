@@ -1,0 +1,51 @@
+
+name: Telegram Group Auto Lock Unlock
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Choose a test action"
+        required: true
+        type: choice
+        options:
+          - unlock
+          - lock
+
+permissions:
+  contents: read
+
+jobs:
+  update-group:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Choose action
+        id: mode
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ github.event.schedule }}" == "0 4 * * *" ]]; then
+            echo "mode=unlock" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ github.event.schedule }}" == "0 12 * * *" ]]; then
+            echo "mode=lock" >> "$GITHUB_OUTPUT"
+          else
+            echo "Unable to determine mode" >&2
+            exit 1
+          fi
+
+      - name: Run bot
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          MODE: ${{ steps.mode.outputs.mode }}
+        run: python bot.py
