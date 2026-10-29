@@ -7,7 +7,6 @@ import urllib.error
 
 TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]
-
 API = f"https://api.telegram.org/bot{TOKEN}/"
 
 
@@ -37,38 +36,32 @@ def call(method, payload):
 
 
 def notice(mode):
-    # Only the Buy-Sell time line is quoted.
-    time_quote = (
-        "<blockquote>"
-        "⏰ <b>Buy-Sell Time: 10:00 AM – 06:00 PM</b>"
-        "</blockquote>\n\n"
-    )
-
     if mode == "unlock":
         return (
-            time_quote
-            + "🟢 <b>গ্রুপ OPEN হয়েছে! 🏦</b>\n\n"
-            + "আজ সকাল ১০টা থেকে ডলার Buy-Sell কার্যক্রম "
+            "<blockquote>⏰ <b>Buy-Sell Time: "
+            "10:00 AM – 06:00 PM</b></blockquote>\n\n"
+            "🟢 <b>গ্রুপ OPEN হয়েছে! 🏦</b>\n\n"
+            "আজ সকাল ১০টা থেকে ডলার Buy-Sell কার্যক্রম "
             "শুরু হয়েছে। এখন আপনারা ডলার কেনা-বেচা "
             "করতে পারবেন।\n"
-            + "━━━━━━━━━━━━━━━━━━\n"
-            + "🔴 <b>Group Auto OFF:</b> সন্ধ্যা ৬টায়।\n\n"
-            + "🙏 <b>ধন্যবাদ | Thank You</b> 🤍"
+            "━━━━━━━━━━━━━━━━━━\n"
+            "🔴 <b>Group Auto OFF:</b> সন্ধ্যা ৬টায়।\n\n"
+            "🙏 <b>ধন্যবাদ | Thank You</b> 🤍"
         )
 
     return (
-        time_quote
-        + "🔴 <b>আজকের মতো গ্রুপ বন্ধ!</b> "
-        + "আজ সন্ধ্যা ৬টায় গ্রুপ অটো OFF হয়েছে।\n"
-        + "━━━━━━━━━━━━━━━━━━\n"
-        + "🟢 <b>Tomorrow:</b> সকাল ১০টায় গ্রুপ আবার "
-        + "অটো OPEN হবে।\n\n"
-        + "🙏 <b>ধন্যবাদ | Thank You</b> 🤍"
+        "<blockquote>⏰ <b>Buy-Sell Time: "
+        "10:00 AM – 06:00 PM</b></blockquote>\n\n"
+        "🔴 <b>আজকের মতো গ্রুপ বন্ধ!</b>\n"
+        "আজ সন্ধ্যা ৬টায় গ্রুপ অটো OFF হয়েছে।\n"
+        "━━━━━━━━━━━━━━━━━━\n"
+        "🟢 <b>Tomorrow:</b> সকাল ১০টায় গ্রুপ "
+        "আবার অটো OPEN হবে।\n\n"
+        "🙏 <b>ধন্যবাদ | Thank You</b> 🤍"
     )
 
 
 def send_pin_wait_unpin(text):
-    # Send the notice using Telegram HTML formatting.
     message = call("sendMessage", {
         "chat_id": CHAT_ID,
         "text": text,
@@ -78,36 +71,38 @@ def send_pin_wait_unpin(text):
 
     message_id = message["message_id"]
 
-    print(f"Notice sent successfully. Message ID: {message_id}")
-
-    # Pin the notice with notification enabled.
+    # Pin the notice and notify group members.
     call("pinChatMessage", {
         "chat_id": CHAT_ID,
         "message_id": message_id,
         "disable_notification": False,
     })
 
-    print("Notice pinned with notification enabled.")
+    print(
+        f"Message {message_id} sent and pinned "
+        "with notification enabled."
+    )
 
-    # Keep it pinned for approximately 60 seconds.
+    # Keep the notice pinned for approximately 1 minute.
     time.sleep(60)
 
-    # Unpin the exact message sent by this workflow.
+    # Unpin this exact message.
     call("unpinChatMessage", {
         "chat_id": CHAT_ID,
         "message_id": message_id,
     })
 
-    print("Notice automatically unpinned after 60 seconds.")
+    print(
+        f"Message {message_id} automatically "
+        "unpinned after approximately 1 minute."
+    )
 
 
 def main():
     mode = os.environ.get("MODE", "").strip().lower()
 
     if mode not in ("lock", "unlock"):
-        raise SystemExit(
-            "Invalid MODE. Set MODE to 'lock' or 'unlock'."
-        )
+        raise SystemExit("MODE must be lock or unlock.")
 
     allow = mode == "unlock"
 
@@ -134,9 +129,8 @@ def main():
         "use_independent_chat_permissions": True,
     })
 
-    print(f"Group permissions updated: {mode.upper()}")
+    print(f"Group permissions successfully updated: {mode.upper()}.")
 
-    # Send, pin, wait 60 seconds, then unpin.
     send_pin_wait_unpin(notice(mode))
 
 
