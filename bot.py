@@ -37,14 +37,14 @@ def notice(mode):
     if mode == "unlock":
         return (
             "<blockquote>⏰ <b>Buy-Sell Time: "
-            "10:00 AM – 6:00 PM</b></blockquote>\n\n"
+            "10 AM – 6 PM</b></blockquote>\n\n"
             "🟢 <b>গ্রুপ OPEN হয়েছে! 🏦</b>\n\n"
             "আজ সকাল ১০টা থেকে ডলার Buy-Sell কার্যক্রম "
             "শুরু হয়েছে। এখন আপনারা ডলার কেনা-বেচা "
             "করতে পারবেন।\n"
             "━━━━━━━━━━━━━━━━━━\n"
             "🔴 <b>Group Auto OFF:</b> সন্ধ্যা ৬টায়।\n\n"
-            "🙏 <b>ধন্যবাদ | Thank You</b> 🤍"
+            "<blockquote>🙏 <b>ধন্যবাদ | Thank You</b> 🤍</blockquote>"
         )
 
     return (
@@ -55,7 +55,7 @@ def notice(mode):
         "━━━━━━━━━━━━━━━━━━\n"
         "🟢 <b>Tomorrow:</b> সকাল ১০টায় গ্রুপ "
         "আবার অটো OPEN হবে।\n\n"
-        "🙏 <b>ধন্যবাদ | Thank You</b> 🤍"
+        "<blockquote>🙏 <b>ধন্যবাদ | Thank You</b> 🤍</blockquote>"
     )
 
 
