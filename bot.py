@@ -27,7 +27,7 @@ def call(method, payload):
 def notice(mode):
     if mode == "unlock":
         return (
-            "⏰ <b>Buy-Sell Time: 10:00 AM – 06:00 PM</b>\n\n"
+            "<blockquote>⏰ <b>Buy-Sell Time: 10:00 AM – 06:00 PM</b></blockquote>\n\n"
             "🟢 <b>গ্রুপ OPEN হয়েছে! 🏦</b>\n\n"
             "আজ সকাল ১০টা থেকে ডলার Buy-Sell কার্যক্রম শুরু হয়েছে। "
             "এখন আপনারা ডলার কেনা-বেচা করতে পারবেন।\n"
